@@ -2,6 +2,7 @@ import sounddevice as sd
 import threading
 import soundfile as sf
 import queue
+import numpy as np
 import tkinter as tk
 from tkinter import ttk
 from scipy.io.wavfile import write
@@ -9,6 +10,7 @@ from scipy.io.wavfile import write
 class AudioRecorder:
 
     def __init__(self):
+        super().__init__()
         self.root = tk.Tk()
         self.root.title("MusicHelper")
         self.root.geometry('800x600')
@@ -17,6 +19,8 @@ class AudioRecorder:
         self.record_button.pack()
         self.stop_record_button = ttk.Button(self.root, text="Stop", command=self.stop_record)
         self.stop_record_button.pack()
+        self.note_button = ttk.Button(self.root, text="Note", command=self.play_a_note)
+        self.note_button.pack()
         self.quit_button = ttk.Button(self.root, text="Quit", command=self.root.destroy)
         self.quit_button.pack()
         self.recording = False
@@ -40,7 +44,16 @@ class AudioRecorder:
     def stop_record(self):
         self.recording = False
 
+    def play_a_note(self):
+        frequency = 440
+        duration = 2.0
+        sample_rate = 44100
 
+        t = np.linspace(0, duration, int(sample_rate * duration), endpoint=False)
+        wave = 0.3 * np.sin(2 * np.pi * frequency * t)
+
+        sd.play(wave, sample_rate)
+        sd.wait()
 
 if __name__ == "__main__":
     AudioRecorder()
