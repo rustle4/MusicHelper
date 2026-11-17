@@ -10,7 +10,6 @@ from scipy.io.wavfile import write
 class AudioRecorder:
 
     def __init__(self):
-        super().__init__()
         self.root = tk.Tk()
         self.root.title("MusicHelper")
         self.root.geometry('800x600')
@@ -45,7 +44,7 @@ class AudioRecorder:
         self.recording = False
 
     def play_a_note(self):
-        frequency = 440
+        frequency = 400
         duration = 2.0
         sample_rate = 44100
 
